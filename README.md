@@ -2,7 +2,7 @@
 
 # Flotation Plant Optimization: What the Data Supports
 
-[![CI](https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre/actions/workflows/ci.yml/badge.svg)](https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre/actions/workflows/ci.yml) ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11-blue) ![Data](https://img.shields.io/badge/data-real%20(Kaggle%2C%20CC0)-2ea44f) ![License](https://img.shields.io/badge/license-MIT-green)
+[![CI](https://github.com/Rxyxs/flotation-plant-silica-soft-sensor/actions/workflows/ci.yml/badge.svg)](https://github.com/Rxyxs/flotation-plant-silica-soft-sensor/actions/workflows/ci.yml) ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11-blue) ![Data](https://img.shields.io/badge/data-real%20(Kaggle%2C%20CC0)-2ea44f) ![License](https://img.shields.io/badge/license-MIT-green)
 
 On six months of real data from an iron-ore flotation plant, the same gradient-boosting model that scores R² 0.83 on randomly shuffled 20-second rows is worse than predicting the average once it is validated in time order; only a model fed the latest lab results beats simply repeating the last one, and four models trained on different months recommend opposite pH and pulp-density moves for the same hours, so the data does not support prescribing setpoints.
 
@@ -78,7 +78,7 @@ The most likely reason: the dose follows the silica. Mean amine flow rises with 
 
 ## What changed from the first version
 
-The first version predicted copper and molybdenum recovery on 50,000 simulated ore blocks and optimized reagents with a genetic algorithm, NSGA-II and differential evolution, plus a plant simulation, SHAP and a FastAPI service. Every one of its numbers came from a generator built for it. It now runs on real plant data, and the result inverted the project's message: prediction works only with recent lab results, and prescription is not supported by observational data. The block model, the simulation, the multi-output model, the deep learning comparison and the API are gone (they remain in the git history); the two optimizers stay, now as the cross-check described above.
+The first version predicted copper and molybdenum recovery on 50,000 simulated ore blocks and optimized reagents with a genetic algorithm, NSGA-II and differential evolution, plus a plant simulation, SHAP and a FastAPI service. Every one of its numbers came from a generator built for it. It now runs on real plant data, and the result inverted the project's message: prediction works only with recent lab results, and prescription is not supported by observational data. The block model, the simulation, the multi-output model, the deep learning comparison and the API are gone (they remain in the git history); the two optimizers stay, now as the cross-check described above. The repository was renamed from `optimizacion-geometalurgica-flotacion-cobre`, since the data is not copper; old links to it on GitHub redirect here.
 
 ## Technology stack
 

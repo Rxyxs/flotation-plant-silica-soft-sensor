@@ -40,8 +40,8 @@
 <h1>Flotation Plant Optimization: What the Data Supports</h1>
 <p class="lede">On six months of real data from an iron-ore flotation plant, the same gradient-boosting model that scores R² 0.83 on randomly shuffled 20-second rows is worse than predicting the average once it is validated in time order; only a model fed the latest lab results beats simply repeating the last one, and four models trained on different months recommend opposite pH and pulp-density moves for the same hours, so the data does not support prescribing setpoints.</p>
 <div class="links">
-<a href="https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre">Code and method</a>
-<a href="https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre#readme">Full README</a>
+<a href="https://github.com/Rxyxs/flotation-plant-silica-soft-sensor">Code and method</a>
+<a href="https://github.com/Rxyxs/flotation-plant-silica-soft-sensor#readme">Full README</a>
 </div></header>
 <p>This page shows the project's results. The methodology, the design decisions and the limitations are documented in the repository's README.</p>
 <h2>The data</h2>
@@ -69,7 +69,7 @@
 <figcaption>The most likely reason: the dose follows the silica. Mean amine flow rises with the silica measured two hours before, up to about 3.5% silica, so in the data high amine goes with high silica and every model recommends less of it. In reverse cationic flotation the amine is the collector that floats the quartz; less of it should raise the silica, not lower it. A model fitted to historical operation learns how operators reacted, not what the reagents do. Choosing setpoints needs data where the doses were moved on purpose (plant trials or step tests), not a better optimizer.</figcaption>
 </figure>
 <footer>
-Pablo Reyes · <a href="https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre">github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre</a> · MIT<br><br>
+Pablo Reyes · <a href="https://github.com/Rxyxs/flotation-plant-silica-soft-sensor">github.com/Rxyxs/flotation-plant-silica-soft-sensor</a> · MIT<br><br>
 Every figure on this page is produced by the repository's pipeline. For the full method and its limitations, see the README.
 </footer>
 </div></body></html>

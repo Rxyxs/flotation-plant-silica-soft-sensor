@@ -2,7 +2,7 @@
 
 # Flotation Plant Optimization: What the Data Supports
 
-[![CI](https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre/actions/workflows/ci.yml/badge.svg)](https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre/actions/workflows/ci.yml) ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11-blue) ![Datos](https://img.shields.io/badge/datos-reales%20(Kaggle%2C%20CC0)-2ea44f) ![Licencia](https://img.shields.io/badge/licencia-MIT-green)
+[![CI](https://github.com/Rxyxs/flotation-plant-silica-soft-sensor/actions/workflows/ci.yml/badge.svg)](https://github.com/Rxyxs/flotation-plant-silica-soft-sensor/actions/workflows/ci.yml) ![Python](https://img.shields.io/badge/python-3.10%20%7C%203.11-blue) ![Datos](https://img.shields.io/badge/datos-reales%20(Kaggle%2C%20CC0)-2ea44f) ![Licencia](https://img.shields.io/badge/licencia-MIT-green)
 
 Con seis meses de datos reales de una planta de flotación de mineral de hierro, el mismo modelo de gradient boosting que logra un R² de 0,83 con filas de 20 segundos mezcladas al azar es peor que predecir el promedio cuando se valida en orden temporal; solo un modelo que recibe los últimos resultados de laboratorio le gana a repetir el último, y cuatro modelos entrenados con meses distintos recomiendan mover el pH y la densidad de pulpa en direcciones opuestas para las mismas horas, así que los datos no permiten recetar setpoints.
 
@@ -78,7 +78,7 @@ La razón más probable: la dosis sigue a la sílice. El flujo medio de amina su
 
 ## Qué cambió respecto de la primera versión
 
-La primera versión predecía la recuperación de cobre y molibdeno en 50.000 bloques de mineral simulados y optimizaba los reactivos con un algoritmo genético, NSGA-II y evolución diferencial, más una simulación de planta, SHAP y un servicio FastAPI. Cada una de sus cifras salía de un generador hecho para ella. Ahora corre con datos reales de planta, y el resultado invirtió el mensaje del proyecto: la predicción funciona solo con resultados recientes de laboratorio, y los datos observacionales no permiten recetar. El modelo de bloques, la simulación, el modelo multisalida, la comparación de deep learning y la API ya no están (siguen en el historial de git); los dos optimizadores se quedan, ahora como el control cruzado descrito arriba.
+La primera versión predecía la recuperación de cobre y molibdeno en 50.000 bloques de mineral simulados y optimizaba los reactivos con un algoritmo genético, NSGA-II y evolución diferencial, más una simulación de planta, SHAP y un servicio FastAPI. Cada una de sus cifras salía de un generador hecho para ella. Ahora corre con datos reales de planta, y el resultado invirtió el mensaje del proyecto: la predicción funciona solo con resultados recientes de laboratorio, y los datos observacionales no permiten recetar. El modelo de bloques, la simulación, el modelo multisalida, la comparación de deep learning y la API ya no están (siguen en el historial de git); los dos optimizadores se quedan, ahora como el control cruzado descrito arriba. El repositorio dejó de llamarse `optimizacion-geometalurgica-flotacion-cobre`, porque los datos no son de cobre; los enlaces antiguos en GitHub redirigen acá.
 
 ## Stack tecnológico
 
