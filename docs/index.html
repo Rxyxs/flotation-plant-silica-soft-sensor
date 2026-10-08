@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flotation Plant Optimization: What the Data Supports</title>
+<meta name="description" content="On six months of real data from an iron-ore flotation plant, the same gradient-boosting model that scores R² 0.83 on randomly shuffled 20-second rows is worse than predicting the a">
+<style>
+  :root { --bg:#FBFAF8; --surface:#FFF; --ink:#23201D; --muted:#6B645D; --line:#E3DED7; --accent:#B5553D; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg:#171614; --surface:#201E1B; --ink:#EDE9E3; --muted:#A9A29A; --line:#322E2A; --accent:#D9765C; } }
+  :root[data-theme="dark"] { --bg:#171614; --surface:#201E1B; --ink:#EDE9E3; --muted:#A9A29A; --line:#322E2A; --accent:#D9765C; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.68 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:900px; margin:0 auto; padding:0 16px 88px; }
+  header { padding:60px 0 32px; border-bottom:1px solid var(--line); margin-bottom:36px; }
+  h1 { font-size:clamp(1.7rem,5vw,2.4rem); line-height:1.16; margin:0 0 18px; letter-spacing:-.02em; }
+  .lede { font-size:clamp(1rem,2.3vw,1.1rem); color:var(--muted); margin:0 0 22px; max-width:62ch; }
+  .lede strong { color:var(--ink); }
+  .links a { display:inline-block; margin:0 9px 9px 0; padding:9px 15px; border:1px solid var(--line);
+    border-radius:7px; text-decoration:none; color:var(--ink); background:var(--surface); font-size:.9rem;
+    transition:border-color .15s; }
+  .links a:hover { border-color:var(--accent); }
+  h2 { font-size:1.3rem; margin:48px 0 8px; padding-top:12px; border-top:1px solid var(--line); letter-spacing:-.01em; }
+  figure { margin:22px 0; }
+  figure img { width:100%; height:auto; display:block; border:1px solid var(--line); border-radius:9px; background:#fff; }
+  figcaption { font-size:.85rem; color:var(--muted); margin-top:9px; max-width:70ch; }
+  p { margin:0 0 16px; max-width:70ch; }
+  code { background:var(--surface); border:1px solid var(--line); border-radius:4px; padding:1px 5px; font-size:.86em;
+    font-family:ui-monospace,SFMono-Regular,Consolas,monospace; }
+  footer { margin-top:60px; padding-top:22px; border-top:1px solid var(--line); font-size:.86rem; color:var(--muted); }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>Flotation Plant Optimization: What the Data Supports</h1>
+<p class="lede">On six months of real data from an iron-ore flotation plant, the same gradient-boosting model that scores R² 0.83 on randomly shuffled 20-second rows is worse than predicting the average once it is validated in time order; only a model fed the latest lab results beats simply repeating the last one, and four models trained on different months recommend opposite pH and pulp-density moves for the same hours, so the data does not support prescribing setpoints.</p>
+<div class="links">
+<a href="https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre">Code and method</a>
+<a href="https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre#readme">Full README</a>
+</div></header>
+<p>This page shows the project's results. The methodology, the design decisions and the limitations are documented in the repository's README.</p>
+<h2>The data</h2>
+<figure>
+<img src="figures/silica_series.png" alt="Hourly silica in the concentrate" loading="lazy">
+<figcaption>The target, hour by hour: lab results in blue, interpolated hours (excluded) in red. Silica averages 2.3% with a standard deviation of 1.1 points and a one-hour autocorrelation of 0.77, which is what makes random splits so flattering.</figcaption>
+</figure>
+<h2>1. Where a high R² comes from</h2>
+<figure>
+<img src="figures/validation_protocols.png" alt="R² under four validation protocols" loading="lazy">
+<figcaption>The same XGBoost model under four protocols. Random 20-second rows put readings from the same hour, with the same lab value, in both training and test; adding the iron in the concentrate hands the model the answer&#x27;s twin. Shuffling hours still mixes neighbours with nearly the same silica. Only time order asks the question a plant cares about, and there the model loses to the average in three of five folds.</figcaption>
+</figure>
+<h2>2. What can be predicted</h2>
+<figure>
+<img src="figures/walk_forward.png" alt="Walk-forward results" loading="lazy">
+<figcaption>Every fold: the models given recent lab results (blue) cluster below persistence (orange); the process-only models scatter around the average, and the tree models reach an RMSE of 1.53 to 1.59 in the second fold.</figcaption>
+</figure>
+<h2>3. What can be prescribed</h2>
+<figure>
+<img src="figures/recommendations.png" alt="Recommended moves by four models" loading="lazy">
+<figcaption>Each model is confident (a predicted drop of 0.43, 0.28, 0.33 and 0.33 silica points), and the models disagree on how to get there. All four agree on the direction of the move in 35% of the hours for starch, 52% for amine, 35% for pH and 10% for pulp density. A genetic algorithm (DEAP) and differential evolution (SciPy) reach the same optimum on the same model (median difference 0.00 points, largest 0.17), so the disagreement is the models&#x27;, not the optimizers&#x27;.</figcaption>
+</figure>
+<figure>
+<img src="figures/operator_reaction.png" alt="Amine dose against earlier silica" loading="lazy">
+<figcaption>The most likely reason: the dose follows the silica. Mean amine flow rises with the silica measured two hours before, up to about 3.5% silica, so in the data high amine goes with high silica and every model recommends less of it. In reverse cationic flotation the amine is the collector that floats the quartz; less of it should raise the silica, not lower it. A model fitted to historical operation learns how operators reacted, not what the reagents do. Choosing setpoints needs data where the doses were moved on purpose (plant trials or step tests), not a better optimizer.</figcaption>
+</figure>
+<footer>
+Pablo Reyes · <a href="https://github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre">github.com/Rxyxs/optimizacion-geometalurgica-flotacion-cobre</a> · MIT<br><br>
+Every figure on this page is produced by the repository's pipeline. For the full method and its limitations, see the README.
+</footer>
+</div></body></html>
